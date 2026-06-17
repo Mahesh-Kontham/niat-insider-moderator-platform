@@ -49,6 +49,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -80,14 +82,20 @@ WSGI_APPLICATION = 'niat_moderator.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': {
-        'ENGINE': env('DB_ENGINE', default='django.db.backends.sqlite3'),
-        'NAME': env('DB_NAME', default=BASE_DIR / 'db.sqlite3'),
-        'USER': env('DB_USER', default=''),
-        'PASSWORD': env('DB_PASSWORD', default=''),
-        'HOST': env('DB_HOST', default=''),
-        'PORT': env('DB_PORT', default=''),
-    }
+    # 'default': {
+    #     'ENGINE': env('DB_ENGINE', default='django.db.backends.sqlite3'),
+    #     'NAME': env('DB_NAME', default=BASE_DIR / 'db.sqlite3'),
+    #     'USER': env('DB_USER', default=''),
+    #     'PASSWORD': env('DB_PASSWORD', default=''),
+    #     'HOST': env('DB_HOST', default=''),
+    #     'PORT': env('DB_PORT', default=''),
+    # }
+    
+    "default": env.db(
+        "DATABASE_URL",
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+    )
+
 }
 
 # Password validation
@@ -115,7 +123,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -212,13 +220,14 @@ LOGGING = {
 }
 
 # Security Settings for Production
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_BROWSER_XSS_FILTER = True
-    SECURE_CONTENT_SECURITY_POLICY = {
-        'default-src': ("'self'",),
-        'script-src': ("'self'", "'unsafe-inline'"),
-        'style-src': ("'self'", "'unsafe-inline'"),
-    }
+    SECURE_SSL_REDIRECT = False
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
+    # SECURE_BROWSER_XSS_FILTER = True
+    # SECURE_CONTENT_SECURITY_POLICY = {
+    #     'default-src': ("'self'",),
+    #     'script-src': ("'self'", "'unsafe-inline'"),
+    #     'style-src': ("'self'", "'unsafe-inline'"),
+    # }
