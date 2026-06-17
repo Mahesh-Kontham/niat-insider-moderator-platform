@@ -1,0 +1,459 @@
+{
+  "info": {
+    "_postman_id": "niat-insider-api",
+    "name": "NIAT Insider Moderator Platform API",
+    "description": "Complete API collection for NIAT Insider Moderator Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@test.com\",\n  \"password\": \"Admin@123456\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/login/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "login", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/auth/me/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "me", ""]
+            }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"old_password\": \"Admin@123456\",\n  \"new_password\": \"NewPassword@123456\",\n  \"confirm_password\": \"NewPassword@123456\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/change-password/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "change-password", ""]
+            }
+          }
+        },
+        {
+          "name": "Onboard New Moderator",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"signed-token-from-email\",\n  \"password\": \"NewModerator@123\",\n  \"confirm_password\": \"NewModerator@123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/onboard/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "onboard", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Operations",
+      "item": [
+        {
+          "name": "Send Moderator Invite",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"moderator@test.com\",\n  \"campus_id\": \"campus-uuid\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/invite/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "admin", "invite", ""]
+            }
+          }
+        },
+        {
+          "name": "List All Moderators",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/admin/list-moderators/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "admin", "list-moderators", ""]
+            }
+          }
+        },
+        {
+          "name": "List All Invites",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/admin/list-invites/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "admin", "list-invites", ""]
+            }
+          }
+        },
+        {
+          "name": "Revoke Invite",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/admin/revoke-invite/invite-uuid/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "admin", "revoke-invite", "invite-uuid", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Articles",
+      "item": [
+        {
+          "name": "List Articles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/articles/?category=NEWS&status=PUBLISHED&search=announcement&ordering=-created_at&page=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "articles", ""],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "NEWS"
+                },
+                {
+                  "key": "status",
+                  "value": "PUBLISHED"
+                },
+                {
+                  "key": "search",
+                  "value": "announcement"
+                },
+                {
+                  "key": "ordering",
+                  "value": "-created_at"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Article",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Campus Event Announcement",
+                  "type": "text"
+                },
+                {
+                  "key": "body",
+                  "value": "This is a detailed article about the campus event...",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "EVENT",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "PUBLISHED",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/articles/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "articles", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Article",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/articles/article-uuid/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "articles", "article-uuid", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Article",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Updated Article Title",
+                  "type": "text"
+                },
+                {
+                  "key": "body",
+                  "value": "Updated article content...",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "DRAFT",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/articles/article-uuid/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "articles", "article-uuid", ""]
+            }
+          }
+        },
+        {
+          "name": "Delete Article",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/articles/article-uuid/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "articles", "article-uuid", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Published Articles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/articles/published/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "articles", "published", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Draft Articles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/articles/drafts/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "articles", "drafts", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campus",
+      "item": [
+        {
+          "name": "List Campuses",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/auth/campus/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "auth", "campus", ""]
+            }
+          }
+        },
+        {
+          "name": "List Campuses with Articles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/campus/with-articles/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "campus", "with-articles", ""]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "access_token",
+      "value": "your-jwt-access-token"
+    },
+    {
+      "key": "admin_access_token",
+      "value": "your-admin-jwt-token"
+    }
+  ]
+}

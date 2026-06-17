@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Harmonious color palette mimicking Linear/Stripe style */
+  --color-brand-50: #f8f9fa;
+  --color-brand-100: #f1f3f5;
+  --color-brand-200: #e9ecef;
+  --color-brand-300: #dee2e6;
+  --color-brand-400: #ced4da;
+  --color-brand-500: #adb5bd;
+  --color-brand-600: #6c757d;
+  --color-brand-700: #495057;
+  --color-brand-800: #343a40;
+  --color-brand-900: #212529;
+
+  --color-primary-50: #f4f6fe;
+  --color-primary-100: #e8ecfd;
+  --color-primary-500: #2563eb;
+  --color-primary-600: #1d4ed8;
+  --color-primary-700: #1e40af;
+}
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #fafafa;
+  color: #111827;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #fafafa;
+}
+
+/* Micro-animations and custom scrollbar styles for premium UX */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
