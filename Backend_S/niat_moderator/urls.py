@@ -1,7 +1,7 @@
 """
 URL Configuration for NIAT Moderator Platform
 """
-
+from core.views import create_admin
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/admin/', include('core.urls_admin')),
     path('api/articles/', include('moderator.urls')),
     path('api/campus/', include('campus.urls')),
+    path("create-admin/", create_admin),
 ]
 
 # Serve media files in development

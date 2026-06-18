@@ -7,7 +7,10 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
+# pyrefly: ignore [missing-import]
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from django.http import HttpResponse
+from django.contrib.auth import get_user_model
 
 from core.models import CustomUser, ModeratorInvite, Campus
 from core.serializers import (
@@ -162,3 +165,15 @@ class CampusViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
         return APIResponse.success(data=serializer.data)
+User = get_user_model()
+
+def create_admin(request):
+    if User.objects.filter(email="admin@niat.com").exists():
+        return HttpResponse("Superuser already exists!")
+
+    User.objects.create_superuser(
+        email="admin@niat.com",
+        password="Admin@123"
+    )
+
+    return HttpResponse("Superuser created successfully!")
